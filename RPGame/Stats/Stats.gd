@@ -4,7 +4,7 @@ signal no_health
 signal health_changed(value)
 signal max_health_changed(value)
 
-var max_health = 1 setget set_max_health
+var max_health = 2 setget set_max_health
 var health = max_health setget set_health
 
 func set_max_health(value):
