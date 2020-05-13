@@ -1,0 +1,18 @@
+extends Area2D
+
+var player = null
+
+func _ready():
+	pass
+
+func _process(delta):
+	pass
+
+func can_see_player():
+	return player != null
+
+func _on_PlayerDetectionZone_body_entered(body):
+	player = body
+
+func _on_PlayerDetectionZone_body_exited(body):
+	player = null
