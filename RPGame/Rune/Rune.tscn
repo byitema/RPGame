@@ -1,0 +1,48 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Rune/Rune.png" type="Texture" id=1]
+[ext_resource path="res://Rune/RuneArea.gd" type="Script" id=2]
+
+[sub_resource type="CircleShape2D" id=6]
+radius = 7.89072
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 1 )
+region = Rect2( 16, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 1 )
+region = Rect2( 32, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 1 )
+region = Rect2( 48, 0, 16, 16 )
+
+[sub_resource type="SpriteFrames" id=5]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ],
+"loop": true,
+"name": "Animate",
+"speed": 5.0
+} ]
+
+[node name="Rune" type="Node2D"]
+
+[node name="RuneArea" type="Area2D" parent="."]
+collision_layer = 64
+collision_mask = 0
+script = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RuneArea"]
+shape = SubResource( 6 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="RuneArea"]
+frames = SubResource( 5 )
+animation = "Animate"
+frame = 1
+playing = true
+[connection signal="body_entered" from="RuneArea" to="RuneArea" method="_on_RuneArea_body_entered"]
