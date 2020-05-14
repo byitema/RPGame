@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=2]
+[gd_scene load_steps=61 format=2]
 
 [ext_resource path="res://World/Bush.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=2]
@@ -9,6 +9,8 @@
 [ext_resource path="res://Enemies/Bat.tscn" type="PackedScene" id=7]
 [ext_resource path="res://UI/HealthUI.tscn" type="PackedScene" id=8]
 [ext_resource path="res://World/Tree.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Rune/Rune.tscn" type="PackedScene" id=10]
+[ext_resource path="res://UI/Score.tscn" type="PackedScene" id=11]
 
 [sub_resource type="TileSet" id=1]
 0/name = "DirtTileset.png 0"
@@ -559,3 +561,16 @@ position = Vector2( 192.389, 23.1319 )
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="HealthUI" parent="CanvasLayer" instance=ExtResource( 8 )]
+
+[node name="Score" parent="CanvasLayer" instance=ExtResource( 11 )]
+
+[node name="Runes" type="Node2D" parent="."]
+
+[node name="Rune" parent="Runes" instance=ExtResource( 10 )]
+position = Vector2( 151.736, 147.764 )
+
+[node name="Rune2" parent="Runes" instance=ExtResource( 10 )]
+position = Vector2( 197.812, 100.098 )
+
+[node name="Rune3" parent="Runes" instance=ExtResource( 10 )]
+position = Vector2( 138.23, 84.6065 )
