@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=2]
+[gd_scene load_steps=66 format=2]
 
 [ext_resource path="res://World/Bush.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=2]
@@ -11,6 +11,10 @@
 [ext_resource path="res://World/Tree.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Rune/Rune.tscn" type="PackedScene" id=10]
 [ext_resource path="res://UI/Score.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Menu/Pause.gd" type="Script" id=12]
+[ext_resource path="res://Menu/PauseContinueButton.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Menu/PauseQuitButton.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Menu/PauseFadeIn.gd" type="Script" id=16]
 
 [sub_resource type="TileSet" id=1]
 0/name = "DirtTileset.png 0"
@@ -486,6 +490,22 @@ points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
 } ]
 0/z_index = 0
 
+[sub_resource type="Animation" id=50]
+resource_name = "fade_in"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 1 ) ]
+}
+
 [node name="World" type="Node2D"]
 
 [node name="Background" type="Sprite" parent="."]
@@ -559,10 +579,65 @@ position = Vector2( 164.128, 165.826 )
 position = Vector2( 192.389, 23.1319 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 100
 
 [node name="HealthUI" parent="CanvasLayer" instance=ExtResource( 8 )]
 
 [node name="Score" parent="CanvasLayer" instance=ExtResource( 11 )]
+
+[node name="Pause" type="Control" parent="CanvasLayer"]
+pause_mode = 2
+visible = false
+margin_right = 320.0
+margin_bottom = 180.0
+mouse_filter = 1
+script = ExtResource( 12 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Overlay" type="ColorRect" parent="CanvasLayer/Pause"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color( 0, 0, 0, 0.462745 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VPause" type="VBoxContainer" parent="CanvasLayer/Pause"]
+margin_top = -0.397217
+margin_right = 320.0
+margin_bottom = 179.603
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HPause" type="HBoxContainer" parent="CanvasLayer/Pause/VPause"]
+margin_right = 320.0
+margin_bottom = 90.0
+rect_min_size = Vector2( 320, 90 )
+
+[node name="Continue" parent="CanvasLayer/Pause/VPause/HPause" instance=ExtResource( 13 )]
+rect_min_size = Vector2( 320, 90 )
+
+[node name="Quit" parent="CanvasLayer/Pause/VPause" instance=ExtResource( 14 )]
+margin_top = 94.0
+margin_bottom = 184.0
+rect_min_size = Vector2( 320, 90 )
+
+[node name="BlackOverlay" type="ColorRect" parent="CanvasLayer/Pause"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color( 0, 0, 0, 0 )
+script = ExtResource( 16 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Pause/BlackOverlay"]
+anims/fade_in = SubResource( 50 )
 
 [node name="Runes" type="Node2D" parent="."]
 
@@ -574,3 +649,7 @@ position = Vector2( 197.812, 100.098 )
 
 [node name="Rune3" parent="Runes" instance=ExtResource( 10 )]
 position = Vector2( 138.23, 84.6065 )
+[connection signal="pressed" from="CanvasLayer/Pause/VPause/HPause/Continue" to="CanvasLayer/Pause" method="_on_MenuButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/Pause/VPause/Quit" to="CanvasLayer/Pause" method="_on_Quit_pressed"]
+[connection signal="fade_finished" from="CanvasLayer/Pause/BlackOverlay" to="CanvasLayer/Pause" method="_on_BlackOverlay_fade_finished"]
+[connection signal="animation_finished" from="CanvasLayer/Pause/BlackOverlay/AnimationPlayer" to="CanvasLayer/Pause/BlackOverlay" method="_on_AnimationPlayer_animation_finished"]

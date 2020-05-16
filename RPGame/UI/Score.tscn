@@ -30,5 +30,5 @@ margin_top = 4.14022
 margin_right = 62.6636
 margin_bottom = 19.1402
 custom_fonts/normal_font = SubResource( 1 )
-custom_colors/default_color = Color( 0.596078, 0.92549, 0.278431, 1 )
+custom_colors/default_color = Color( 1, 0, 0, 1 )
 text = "0"
