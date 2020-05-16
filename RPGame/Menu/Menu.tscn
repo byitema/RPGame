@@ -1,0 +1,64 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Menu/logo.png" type="Texture" id=1]
+[ext_resource path="res://Menu/MenuQuitButton.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Menu/MenuPlayButton.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Menu/FadeIn.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Menu/TitleScreen.gd" type="Script" id=5]
+
+[node name="Menu" type="Node2D"]
+
+[node name="TitleScreen" type="Control" parent="."]
+margin_right = 320.0
+margin_bottom = 180.0
+mouse_filter = 2
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Menu" type="VBoxContainer" parent="TitleScreen"]
+margin_left = 40.0
+margin_right = 280.0
+margin_bottom = 155.0
+mouse_filter = 2
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Logo" type="TextureRect" parent="TitleScreen/Menu"]
+margin_right = 240.0
+margin_bottom = 64.0
+texture = ExtResource( 1 )
+stretch_mode = 4
+
+[node name="CenterRow" type="HBoxContainer" parent="TitleScreen/Menu"]
+margin_top = 68.0
+margin_right = 240.0
+margin_bottom = 155.0
+mouse_filter = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Buttons" type="VBoxContainer" parent="TitleScreen/Menu/CenterRow"]
+margin_right = 240.0
+margin_bottom = 87.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="MenuPlayButton" parent="TitleScreen/Menu/CenterRow/Buttons" instance=ExtResource( 3 )]
+margin_top = 1.0
+margin_bottom = 41.0
+
+[node name="MenuQuitButton" parent="TitleScreen/Menu/CenterRow/Buttons" instance=ExtResource( 2 )]
+margin_top = 45.0
+margin_bottom = 85.0
+
+[node name="FadeIn" parent="TitleScreen" instance=ExtResource( 4 )]
+mouse_filter = 2
+[connection signal="pressed" from="TitleScreen/Menu/CenterRow/Buttons/MenuPlayButton" to="TitleScreen" method="_on_MenuPlayButton_pressed"]
+[connection signal="pressed" from="TitleScreen/Menu/CenterRow/Buttons/MenuQuitButton" to="TitleScreen" method="_on_MenuQuitButton_pressed"]
+[connection signal="fade_finished" from="TitleScreen/FadeIn" to="TitleScreen" method="_on_FadeIn_fade_finished"]
