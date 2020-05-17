@@ -1,0 +1,76 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Menu/MenuDiedButton.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Menu/YouDiedButton.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Menu/YouDiedScene.gd" type="Script" id=3]
+[ext_resource path="res://Menu/BlackOverlayDied.gd" type="Script" id=4]
+
+[sub_resource type="Animation" id=1]
+resource_name = "fade_in"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 1 ) ]
+}
+
+[node name="Control" type="Control"]
+margin_right = 320.0
+margin_bottom = 180.0
+mouse_filter = 1
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Overlay" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+color = Color( 0, 0, 0, 0.607843 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_right = 320.0
+margin_bottom = 184.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_right = 320.0
+margin_bottom = 90.0
+rect_min_size = Vector2( 320, 90 )
+
+[node name="MenuButton" parent="VBoxContainer/HBoxContainer" instance=ExtResource( 2 )]
+rect_min_size = Vector2( 320, 90 )
+
+[node name="MenuButton2" parent="VBoxContainer" instance=ExtResource( 1 )]
+margin_top = 94.0
+margin_bottom = 184.0
+rect_min_size = Vector2( 320, 90 )
+
+[node name="BlackOverlay" type="ColorRect" parent="."]
+margin_right = 320.0
+margin_bottom = 180.0
+mouse_filter = 1
+color = Color( 0, 0, 0, 0 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="BlackOverlay"]
+anims/fade_in = SubResource( 1 )
+[connection signal="pressed" from="VBoxContainer/MenuButton2" to="." method="_on_MenuButton2_pressed"]
+[connection signal="fade_finished" from="BlackOverlay" to="." method="_on_BlackOverlay_fade_finished"]
+[connection signal="animation_finished" from="BlackOverlay/AnimationPlayer" to="BlackOverlay" method="_on_AnimationPlayer_animation_finished"]

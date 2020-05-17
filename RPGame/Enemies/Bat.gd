@@ -1,5 +1,6 @@
 extends KinematicBody2D
 
+export var type = "enemy2"
 export var MAX_SPEED = 50
 export var ACCELERATION = 300
 export var FRICTION = 200
@@ -64,7 +65,10 @@ func _physics_process(delta):
 func accelerate_towards_position(position, delta):
 	var direction = global_position.direction_to(position)
 	velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
-	animatedSprite.flip_h = velocity.x < 0
+	if type == "Bat":
+		animatedSprite.flip_h = velocity.x < 0
+	else:
+		$AnimatedSprite2.flip_h = velocity.x < 0
 
 func seek_player():
 	if playerDetectionZone.can_see_player():
@@ -91,7 +95,13 @@ func _on_Stats_no_health():
 	enemyDeathEffect.global_position = global_position
 
 func _on_Hurtbox_invincibility_started():
-	animationPlayer.play("Start")
+	if type == "Bat":
+		animationPlayer.play("Start")
+	else:
+		$AnimationPlayer2.play("Start")
 
 func _on_Hurtbox_invincibility_ended():
-	animationPlayer.play("Stop")
+	if type == "Bat":
+		animationPlayer.play("Stop")
+	else:
+		$AnimationPlayer2.play("Stop")

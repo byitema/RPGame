@@ -1,0 +1,95 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Effects/whitecolorshader.shader" type="Shader" id=1]
+[ext_resource path="res://Enemies/Bat.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Enemies/enemy2.png" type="Texture" id=3]
+
+[sub_resource type="ShaderMaterial" id=1]
+resource_local_to_scene = true
+shader = ExtResource( 1 )
+shader_param/active = true
+
+[sub_resource type="ShaderMaterial" id=5]
+shader = ExtResource( 1 )
+shader_param/active = false
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 3 )
+region = Rect2( 16, 0, 16, 16 )
+
+[sub_resource type="SpriteFrames" id=4]
+animations = [ {
+"frames": [ SubResource( 2 ), SubResource( 3 ) ],
+"loop": true,
+"name": "Animate",
+"speed": 5.0
+} ]
+
+[sub_resource type="Animation" id=6]
+resource_name = "Start"
+length = 0.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite2:material:shader_param/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "Stop"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite2:material:shader_param/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[node name="enemy2" instance=ExtResource( 2 )]
+type = "Enemy2"
+
+[node name="AnimatedSprite" parent="." index="0"]
+visible = false
+material = SubResource( 1 )
+
+[node name="Stats" parent="." index="4"]
+max_health = 1
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+position = Vector2( 0, -12 )
+
+[node name="AnimatedSprite2" type="AnimatedSprite" parent="." index="10"]
+material = SubResource( 5 )
+frames = SubResource( 4 )
+animation = "Animate"
+playing = true
+offset = Vector2( 0, -12 )
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="." index="11"]
+anims/Start = SubResource( 6 )
+anims/Stop = SubResource( 7 )
+
+[editable path="Hurtbox"]
+
+[editable path="PlayerDetectionZone"]
+
+[editable path="Hitbox"]
+
+[editable path="SoftCollisionComponent"]

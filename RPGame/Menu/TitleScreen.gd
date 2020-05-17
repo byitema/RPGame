@@ -21,6 +21,7 @@ func _on_MenuPlayButton_pressed():
 
 
 func _on_FadeIn_fade_finished():
+	PlayerStats.health = PlayerStats.max_health
 	PlayerStats.score = 0
 	get_tree().change_scene("res://World.tscn")
 
