@@ -1,4 +1,4 @@
-extends Control
+extends StaticBody2D
 
 
 # Declare member variables here. Examples:
@@ -8,10 +8,8 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	PlayerStats.connect("score_changed", self, "change_text")
+	pass # Replace with function body.
 
-func change_text(value):
-	$RichTextLabel.text = "\n " + str(value)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

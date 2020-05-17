@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
 const PlayerHurtSound = preload("res://Player/PlayerHurtSound.tscn")
+const died = preload("res://Menu/YouDiedScene.tscn")
 
 export var MAX_SPEED = 125
 export var ROLL_SPEED = 150
