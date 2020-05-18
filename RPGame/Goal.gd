@@ -8,7 +8,7 @@ var scene = preload("res://Dialog/EndTextBox.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	PlayerStats.score = 6
+	pass
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -17,7 +17,7 @@ func _ready():
 
 
 func _on_Goal_body_entered(body):
-	if PlayerStats.score == 7:
+	if PlayerStats.score == 8:
 		if get_parent().has_node("CanvasLayer/TextBox"):
 			get_parent().get_node("CanvasLayer/TextBox").queue_free()
 		if get_parent().has_node("CanvasLayer/EndTextBox"):
